@@ -1,0 +1,75 @@
+# serverless.yml
+
+#组件信息
+component: scf # (必选) 组件名称，在该实例中为scf
+name: jdscript # (必选) 组件实例名称。
+
+#组件参数配置
+inputs:
+  name: scf-${name} # 云函数名称，默认为 ${name}-${stage}-${app}
+  enableRoleAuth: true # 默认会尝试创建 SCF_QcsRole 角色，如果不需要配置成 false 即可
+  src: ./
+  handler: index.main_handler #入口
+  runtime: Nodejs12.16 # 运行环境 默认 Nodejs10.15
+  region: ap-hongkong # 函数所在区域
+  description: This is a function in ${app} application.
+  memorySize: 128 # 内存大小，单位MB
+  timeout: 900 # 超时时间，单位秒
+  events: # 触发器
+    - timer: #财富岛提现1元
+        parameters:
+          name: jx_cfdtx
+          cronExpression: "58 59 23 * * * *"
+          enable: true
+          argument: jx_cfdtx
+    - timer: #东东超市兑换1000豆
+        parameters:
+          name: blueCoin_jd_speed_redpocke
+          cronExpression: "58 59 23 * * * *"
+          enable: true
+          argument: jd_blueCoin
+    - timer: #宠汪汪积分兑换京豆#签到领现金 #东东小窝#京东直播#点点券#宠汪汪偷好友积分与狗粮 jd_joy_steal
+        parameters:
+          name: joyreward_cash_smallhome_jd_live_necklace_joy_steal
+          cronExpression: "0 0 0-16/8,20 * * * *"
+          enable: true
+          argument: jd_joy_reward&jd_cash&jd_small_home&jd_live&jd_necklace&jd_joy_steal
+    - timer: #京东汽车兑换500豆
+        parameters:
+          name: jd_car_exchange_
+          cronExpression: "58 59 23 * * * *"
+          enable: true
+          argument: jd_car_exchange
+    - timer: #京东全民开红包 #进店领豆 #摇京豆 #监控crazyJoy分红 
+        parameters:
+          name: redPacket_shop_clublottery_crazy_joy_bonus_
+          cronExpression: "3 0 0 * * * *"
+          enable: true
+          argument: jd_redPacket&jd_shop&jd_club_lottery&jd_crazy_joy_bonus
+    - timer: #京东国际盲盒
+        parameters:
+          name: jd_global_mh
+          cronExpression: "0 0 9,12,20,21 * * * *"
+          enable: true
+          argument: jd_global_mh
+    - timer: #财富岛
+        parameters:
+          name: jx_cfd
+          cronExpression: "0 0,8,13,19 * * *"
+          enable: true
+          argument: jx_cfd
+    - timer: #超级直播间红包雨
+        parameters:
+          name: jd_live_redrain
+          cronExpression: "30,31 20-23/1 * * *"
+          enable: true
+          argument: jd_live_redrain
+    - timer: #京东手机狂欢城2021-4-1至2021-4-20
+        parameters:
+          name: jd_carnivalcity
+          cronExpression: "0 0-18/6 * * *"
+          enable: true
+          argument: jd_carnivalcity
+  environment: #  环境变量
+    variables: #  环境变量对象
+      AAA: BBB # 不要删除，用来格式化对齐追加的变量的
